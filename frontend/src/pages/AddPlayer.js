@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddPlayer.css';
 
-
 const AddPlayer = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -20,10 +19,10 @@ const AddPlayer = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/categories');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/categories`);
                 setCategories(response.data);
             } catch (error) {
-                console.error('Error fetching categories:', error);
+                console.error('Erreur lors de la récupération des catégories :', error);
             }
         };
         fetchCategories();
@@ -37,11 +36,21 @@ const AddPlayer = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/players', formData);
-            alert('Player added successfully!');
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/players`, formData);
+            alert('Joueur ajouté avec succès !');
+            setFormData({
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                dateOfBirth: '',
+                ageCategory: '',
+                registrationFee: 0,
+                clothingFee: 0,
+                remarks: '',
+            }); // Réinitialise le formulaire
         } catch (error) {
-            console.error('Error adding player:', error);
-            alert('Failed to add player.');
+            console.error('Erreur lors de l\'ajout du joueur :', error);
+            alert('Échec de l\'ajout du joueur.');
         }
     };
 
@@ -59,7 +68,7 @@ const AddPlayer = () => {
             <input
                 type="text"
                 name="lastName"
-                placeholder="prenom"
+                placeholder="Prénom"
                 value={formData.lastName}
                 onChange={handleChange}
                 required
@@ -67,7 +76,7 @@ const AddPlayer = () => {
             <input
                 type="text"
                 name="phoneNumber"
-                placeholder="numero de telephone"
+                placeholder="Numéro de téléphone"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 required
@@ -85,27 +94,13 @@ const AddPlayer = () => {
                 onChange={handleChange}
                 required
             >
-                <option value="">Selectionner une categorie</option>
+                <option value="">Sélectionner une catégorie</option>
                 {categories.map((category) => (
                     <option key={category._id} value={category._id}>
                         {category.name}
                     </option>
                 ))}
             </select>
-            {/* <input
-                type="number"
-                name="registrationFee"
-                placeholder="Frais d'inscription"
-                value={formData.registrationFee}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                name="clothingFee"
-                placeholder="Frais de vetements"
-                value={formData.clothingFee}
-                onChange={handleChange}
-            /> */}
             <textarea
                 name="remarks"
                 placeholder="Remarque"

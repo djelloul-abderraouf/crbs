@@ -4,7 +4,6 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearSca
 import { Doughnut, Bar } from 'react-chartjs-2';
 import './Dashboard.css';
 
-
 // Enregistrez les composants nécessaires pour Chart.js
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
@@ -22,11 +21,11 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchPlayers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/players');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/players`);
                 setPlayers(response.data);
                 calculateStats(response.data);
             } catch (error) {
-                console.error('Error fetching players:', error);
+                console.error('Erreur lors de la récupération des joueurs :', error);
             }
         };
         fetchPlayers();
@@ -85,7 +84,7 @@ const Dashboard = () => {
                     />
                 </div>
                 <div className="stat">
-                    <h3>Frais de vetements</h3>
+                    <h3>Frais de vêtements</h3>
                     <Doughnut
                         data={{
                             labels: ['payé', 'impayé'],
@@ -103,10 +102,10 @@ const Dashboard = () => {
                 <h3>Montant total</h3>
                 <Bar
                     data={{
-                        labels: ['Frais inscription', 'Frais vetements', 'Total'],
+                        labels: ['Frais inscription', 'Frais vêtements', 'Total'],
                         datasets: [
                             {
-                                label: 'Total ',
+                                label: 'Montant total',
                                 data: [
                                     stats.totalRegistration,
                                     stats.totalClothing,

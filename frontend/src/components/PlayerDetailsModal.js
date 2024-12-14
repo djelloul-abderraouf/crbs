@@ -3,7 +3,6 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import './PlayerDetailsModal.css';
 
-
 Modal.setAppElement('#root'); // Nécessaire pour éviter les avertissements d'accessibilité
 
 const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
@@ -29,7 +28,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
     // Mettre à jour un joueur
     const handleUpdate = async () => {
         try {
-            await axios.put(`http://localhost:5000/api/players/${player._id}`, formData);
+            await axios.put(`${process.env.REACT_APP_API_URL}/api/players/${player._id}`, formData);
             alert('Player updated successfully!');
             onClose();
             onPlayerUpdate((prevPlayers) =>
@@ -44,7 +43,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
     // Supprimer un joueur
     const handleDelete = async () => {
         try {
-            await axios.delete(`http://localhost:5000/api/players/${player._id}`);
+            await axios.delete(`${process.env.REACT_APP_API_URL}/api/players/${player._id}`);
             alert('Player deleted successfully!');
             onClose();
             onPlayerUpdate((prevPlayers) =>
@@ -88,13 +87,15 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
                     onChange={handleChange}
                 />
                 <h3>Frais d'inscriptions</h3>
-                <input
-                    type="checkbox"
-                    name="registrationFee.isPaid"
-                    checked={formData.registrationFee.isPaid}
-                    onChange={handleChange}
-                />
-                <label>payé</label>
+                <div className="checkbox-group">
+                    <input
+                        type="checkbox"
+                        name="registrationFee.isPaid"
+                        checked={formData.registrationFee.isPaid}
+                        onChange={handleChange}
+                    />
+                    <label>payé</label>
+                </div>
                 <input
                     type="number"
                     name="registrationFee.amount"
@@ -104,13 +105,15 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
                 />
 
                 <h3>Frais de vetements</h3>
-                <input
-                    type="checkbox"
-                    name="clothingFee.isPaid"
-                    checked={formData.clothingFee.isPaid}
-                    onChange={handleChange}
-                />
-                <label>payé</label>
+                <div className="checkbox-group">
+                    <input
+                        type="checkbox"
+                        name="clothingFee.isPaid"
+                        checked={formData.clothingFee.isPaid}
+                        onChange={handleChange}
+                    />
+                    <label>payé</label>
+                </div>
                 <input
                     type="number"
                     name="clothingFee.amount"
@@ -126,7 +129,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
                     Supprimer joueur
                 </button>
                 <button type="button" onClick={onClose}>
-                Fermé
+                    Fermé
                 </button>
             </form>
         </Modal>
