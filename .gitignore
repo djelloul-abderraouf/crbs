@@ -1,0 +1,16 @@
+# Ignorer les dépendances Node.js
+node_modules/
+
+# Ignorer les fichiers de build (frontend)
+frontend/build/
+
+# Ignorer les fichiers sensibles
+.env
+backend/.env
+frontend/.env
+
+# Ignorer les fichiers temporaires et logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
