@@ -3,6 +3,7 @@ import Modal from 'react-modal';
 import axios from 'axios';
 import './PlayerDetailsModal.css';
 
+
 Modal.setAppElement('#root'); // Nécessaire pour éviter les avertissements d'accessibilité
 
 const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
@@ -28,7 +29,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
     // Mettre à jour un joueur
     const handleUpdate = async () => {
         try {
-            await axios.put(`${process.env.REACT_APP_API_URL}/api/players/${player._id}`, formData);
+            await axios.put(`http://localhost:5000/api/players/${player._id}`, formData);
             alert('Player updated successfully!');
             onClose();
             onPlayerUpdate((prevPlayers) =>
@@ -43,7 +44,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
     // Supprimer un joueur
     const handleDelete = async () => {
         try {
-            await axios.delete(`${process.env.REACT_APP_API_URL}/api/players/${player._id}`);
+            await axios.delete(`http://localhost:5000/api/players/${player._id}`);
             alert('Player deleted successfully!');
             onClose();
             onPlayerUpdate((prevPlayers) =>
@@ -125,7 +126,7 @@ const PlayerDetailsModal = ({ player, onClose, onPlayerUpdate }) => {
                     Supprimer joueur
                 </button>
                 <button type="button" onClick={onClose}>
-                    Fermé
+                Fermé
                 </button>
             </form>
         </Modal>

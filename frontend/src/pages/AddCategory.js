@@ -8,11 +8,11 @@ const AddCategory = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post(`${process.env.REACT_APP_API_URL}/api/categories`, { name: categoryName });
+            await axios.post('http://localhost:5000/api/categories', { name: categoryName });
             alert('Category added successfully!');
             setCategoryName(''); // Réinitialiser le champ après ajout
         } catch (error) {
-            console.error('Error adding category:', error);
+            console.error(error);
             alert('Failed to add category.');
         }
     };
@@ -20,10 +20,10 @@ const AddCategory = () => {
     return (
         <div className="add-category">
             <form onSubmit={handleSubmit}>
-                <h1>Ajouter catégorie</h1>
+                <h1>Ajouter categorie</h1>
                 <input
                     type="text"
-                    placeholder="Nom de la catégorie"
+                    placeholder="nom de la categorie"
                     value={categoryName}
                     onChange={(e) => setCategoryName(e.target.value)}
                     required
