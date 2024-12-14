@@ -2,8 +2,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const dotenv = require('dotenv');
-const playerRoutes = require('./routes/players');
-const categoryRoutes = require('./routes/categories');
+const playerRoutes = require('./backend/routes/players');
+const categoryRoutes = require('./backend/routes/categories');
 
 dotenv.config(); // Charge les variables d'environnement depuis le fichier .env
 const app = express();
