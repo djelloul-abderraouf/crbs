@@ -1,125 +1,115 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement } from 'chart.js';
-import { Doughnut, Bar } from 'react-chartjs-2';
-import './Dashboard.css';
+import './AddPlayer.css';
 
-
-// Enregistrez les composants nécessaires pour Chart.js
-ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
-
-const Dashboard = () => {
-    const [players, setPlayers] = useState([]);
-    const [stats, setStats] = useState({
-        registrationPaid: 0,
-        registrationUnpaid: 0,
-        clothingPaid: 0,
-        clothingUnpaid: 0,
-        totalRegistration: 0,
-        totalClothing: 0,
+const AddPlayer = () => {
+    const [formData, setFormData] = useState({
+        firstName: '',
+        lastName: '',
+        phoneNumber: '',
+        dateOfBirth: '',
+        ageCategory: '',
+        registrationFee: 0,
+        clothingFee: 0,
+        remarks: '',
     });
+    const [categories, setCategories] = useState([]);
 
+    // Fetch categories from the backend
     useEffect(() => {
-        const fetchPlayers = async () => {
+        const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/players');
-                setPlayers(response.data);
-                calculateStats(response.data);
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/categories`);
+                setCategories(response.data);
             } catch (error) {
-                console.error('Error fetching players:', error);
+                console.error('Error fetching categories:', error);
             }
         };
-        fetchPlayers();
+        fetchCategories();
     }, []);
 
-    const calculateStats = (players) => {
-        let registrationPaid = 0;
-        let registrationUnpaid = 0;
-        let clothingPaid = 0;
-        let clothingUnpaid = 0;
-        let totalRegistration = 0;
-        let totalClothing = 0;
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
 
-        players.forEach((player) => {
-            if (player.registrationFee.isPaid) {
-                registrationPaid++;
-                totalRegistration += player.registrationFee.amount;
-            } else {
-                registrationUnpaid++;
-            }
-
-            if (player.clothingFee.isPaid) {
-                clothingPaid++;
-                totalClothing += player.clothingFee.amount;
-            } else {
-                clothingUnpaid++;
-            }
-        });
-
-        setStats({
-            registrationPaid,
-            registrationUnpaid,
-            clothingPaid,
-            clothingUnpaid,
-            totalRegistration,
-            totalClothing,
-        });
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/players`, formData);
+            alert('Player added successfully!');
+            setFormData({
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                dateOfBirth: '',
+                ageCategory: '',
+                registrationFee: 0,
+                clothingFee: 0,
+                remarks: '',
+            }); // Réinitialiser le formulaire après l'ajout
+        } catch (error) {
+            console.error('Error adding player:', error);
+            alert('Failed to add player.');
+        }
     };
 
     return (
-        <div>
-            <h1>Dashboard</h1>
-            <div className="stats">
-                <div className="stat">
-                    <h3>Frais d'inscription</h3>
-                    <Doughnut
-                        data={{
-                            labels: ['payé', 'impayé'],
-                            datasets: [
-                                {
-                                    data: [stats.registrationPaid, stats.registrationUnpaid],
-                                    backgroundColor: ['#4caf50', '#f44336'],
-                                },
-                            ],
-                        }}
-                    />
-                </div>
-                <div className="stat">
-                    <h3>Frais de vetements</h3>
-                    <Doughnut
-                        data={{
-                            labels: ['payé', 'impayé'],
-                            datasets: [
-                                {
-                                    data: [stats.clothingPaid, stats.clothingUnpaid],
-                                    backgroundColor: ['#4caf50', '#f44336'],
-                                },
-                            ],
-                        }}
-                    />
-                </div>
-            </div>
-            <div className="totals">
-                <h3>Montant total</h3>
-                <Bar
-                    data={{
-                        labels: ['Frais inscription', 'Frais vetements', 'Total'],
-                        datasets: [
-                            {
-                                label: 'Total ',
-                                data: [
-                                    stats.totalRegistration,
-                                    stats.totalClothing,
-                                    stats.totalRegistration + stats.totalClothing,
-                                ],
-                                backgroundColor: ['#2196f3', '#ff9800', '#9c27b0'],
-                            },
-                        ],
-                    }}
-                />
-            </div>
-        </div>
+        <form className="form" onSubmit={handleSubmit}>
+            <h1>Ajouter un joueur</h1>
+            <input
+                type="text"
+                name="firstName"
+                placeholder="Nom"
+                value={formData.firstName}
+                onChange={handleChange}
+                required
+            />
+            <input
+                type="text"
+                name="lastName"
+                placeholder="Prenom"
+                value={formData.lastName}
+                onChange={handleChange}
+                required
+            />
+            <input
+                type="text"
+                name="phoneNumber"
+                placeholder="Numero de telephone"
+                value={formData.phoneNumber}
+                onChange={handleChange}
+                required
+            />
+            <input
+                type="date"
+                name="dateOfBirth"
+                value={formData.dateOfBirth}
+                onChange={handleChange}
+                required
+            />
+            <select
+                name="ageCategory"
+                value={formData.ageCategory}
+                onChange={handleChange}
+                required
+            >
+                <option value="">Selectionner une categorie</option>
+                {categories.map((category) => (
+                    <option key={category._id} value={category._id}>
+                        {category.name}
+                    </option>
+                ))}
+            </select>
+            <textarea
+                name="remarks"
+                placeholder="Remarque"
+                value={formData.remarks}
+                onChange={handleChange}
+            />
+            <button type="submit">Ajouter</button>
+        </form>
     );
 };
 
-export default Dashboard;
+export default AddPlayer;

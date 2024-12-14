@@ -15,7 +15,7 @@ const PlayersList = () => {
     useEffect(() => {
         const fetchPlayers = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/players');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/players`);
                 setPlayers(response.data);
             } catch (error) {
                 console.error('Error fetching players:', error);
@@ -27,7 +27,7 @@ const PlayersList = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/categories');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/categories`);
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -66,15 +66,15 @@ const PlayersList = () => {
             registrationFeeFilter === 'paid'
                 ? player.registrationFee.isPaid
                 : registrationFeeFilter === 'unpaid'
-                    ? !player.registrationFee.isPaid
-                    : true;
+                ? !player.registrationFee.isPaid
+                : true;
 
         const matchesClothingFee =
             clothingFeeFilter === 'paid'
                 ? player.clothingFee.isPaid
                 : clothingFeeFilter === 'unpaid'
-                    ? !player.clothingFee.isPaid
-                    : true;
+                ? !player.clothingFee.isPaid
+                : true;
 
         return matchesSearch && matchesCategory && matchesRegistrationFee && matchesClothingFee;
     });
@@ -93,12 +93,12 @@ const PlayersList = () => {
             <div className="filter-bar">
                 <input
                     type="text"
-                    placeholder="rechercher par nom ou num de telephone"
+                    placeholder="Rechercher par nom ou numéro de téléphone"
                     value={searchQuery}
                     onChange={handleSearch}
                 />
                 <select onChange={handleFilterCategory} value={categoryFilter}>
-                    <option value="">Toutes les categories</option>
+                    <option value="">Toutes les catégories</option>
                     {categories.map((category) => (
                         <option key={category._id} value={category._id}>
                             {category.name}
@@ -107,13 +107,13 @@ const PlayersList = () => {
                 </select>
                 <select onChange={handleFilterRegistrationFee} value={registrationFeeFilter}>
                     <option value="">Frais d'inscription</option>
-                    <option value="paid">payé</option>
-                    <option value="unpaid">impayé</option>
+                    <option value="paid">Payé</option>
+                    <option value="unpaid">Impayé</option>
                 </select>
                 <select onChange={handleFilterClothingFee} value={clothingFeeFilter}>
-                    <option value="">Frais de vetements</option>
-                    <option value="paid">payé</option>
-                    <option value="unpaid">impayé</option>
+                    <option value="">Frais de vêtements</option>
+                    <option value="paid">Payé</option>
+                    <option value="unpaid">Impayé</option>
                 </select>
             </div>
             <div className="player-cards">
@@ -121,10 +121,10 @@ const PlayersList = () => {
                     <div className="player-box" key={player._id}>
                         <div className="player-info">
                             <h3>{`${player.firstName} ${player.lastName}`}</h3>
-                            <p><strong>Num de téléphone:</strong> {player.phoneNumber}</p>
-                            <p><strong>Catégorie:</strong> {player.ageCategory?.name || 'N/A'}</p>
-                            <p><strong>Inscription payé:</strong> {player.registrationFee.isPaid ? 'Oui' : 'Non'}</p>
-                            <p><strong>Vêtements payé:</strong> {player.clothingFee.isPaid ? 'Oui' : 'Non'}</p>
+                            <p><strong>Numéro de téléphone :</strong> {player.phoneNumber}</p>
+                            <p><strong>Catégorie :</strong> {player.ageCategory?.name || 'N/A'}</p>
+                            <p><strong>Inscription payé :</strong> {player.registrationFee.isPaid ? 'Oui' : 'Non'}</p>
+                            <p><strong>Vêtements payé :</strong> {player.clothingFee.isPaid ? 'Oui' : 'Non'}</p>
                         </div>
                         <div className="player-actions">
                             <button onClick={() => handleOpenModal(player)}>Détails</button>

@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import './AddPlayer.css';
 
-
 const AddPlayer = () => {
     const [formData, setFormData] = useState({
         firstName: '',
@@ -20,7 +19,7 @@ const AddPlayer = () => {
     useEffect(() => {
         const fetchCategories = async () => {
             try {
-                const response = await axios.get('http://localhost:5000/api/categories');
+                const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/categories`);
                 setCategories(response.data);
             } catch (error) {
                 console.error('Error fetching categories:', error);
@@ -37,8 +36,18 @@ const AddPlayer = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:5000/api/players', formData);
+            await axios.post(`${process.env.REACT_APP_API_URL}/api/players`, formData);
             alert('Player added successfully!');
+            setFormData({
+                firstName: '',
+                lastName: '',
+                phoneNumber: '',
+                dateOfBirth: '',
+                ageCategory: '',
+                registrationFee: 0,
+                clothingFee: 0,
+                remarks: '',
+            }); // Réinitialiser le formulaire après l'ajout
         } catch (error) {
             console.error('Error adding player:', error);
             alert('Failed to add player.');
@@ -59,7 +68,7 @@ const AddPlayer = () => {
             <input
                 type="text"
                 name="lastName"
-                placeholder="prenom"
+                placeholder="Prenom"
                 value={formData.lastName}
                 onChange={handleChange}
                 required
@@ -67,7 +76,7 @@ const AddPlayer = () => {
             <input
                 type="text"
                 name="phoneNumber"
-                placeholder="numero de telephone"
+                placeholder="Numero de telephone"
                 value={formData.phoneNumber}
                 onChange={handleChange}
                 required
@@ -92,20 +101,6 @@ const AddPlayer = () => {
                     </option>
                 ))}
             </select>
-            {/* <input
-                type="number"
-                name="registrationFee"
-                placeholder="Frais d'inscription"
-                value={formData.registrationFee}
-                onChange={handleChange}
-            />
-            <input
-                type="number"
-                name="clothingFee"
-                placeholder="Frais de vetements"
-                value={formData.clothingFee}
-                onChange={handleChange}
-            /> */}
             <textarea
                 name="remarks"
                 placeholder="Remarque"
