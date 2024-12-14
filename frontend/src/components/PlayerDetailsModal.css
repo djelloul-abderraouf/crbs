@@ -1,0 +1,131 @@
+/* Overlay de la modale */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* Conteneur principal de la modale */
+.modal {
+    background: #ffffff; /* Blanc */
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre subtile */
+    padding: 20px;
+    width: 90%;
+    max-width: 500px;
+    max-height: 90%; /* Limiter la hauteur */
+    overflow-y: auto; /* Activer le défilement vertical */
+    animation: fadeIn 0.3s ease-out;
+}
+
+/* Animation pour l'apparition de la modale */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Titre de la modale */
+.modal h2 {
+    font-size: 1.5rem;
+    color: #c20000; /* Rouge */
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+/* Formulaire */
+.modal form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Champs d'entrée */
+.modal input, .modal textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c20000; /* Rouge */
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+    background: #ffffff; /* Blanc */
+    color: #000000; /* Noir */
+    transition: border-color 0.3s ease;
+}
+
+.modal input:focus, .modal textarea:focus {
+    border-color: #a00000; /* Rouge foncé */
+    outline: none;
+    box-shadow: 0 0 5px rgba(194, 0, 0, 0.5); /* Effet lumineux */
+}
+
+/* Boutons */
+.modal button {
+    padding: 10px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.modal button[type="button"] {
+    background-color: #c20000; /* Rouge */
+    color: #ffffff; /* Blanc */
+}
+
+.modal button[type="button"]:hover {
+    background-color: #a00000; /* Rouge foncé */
+    transform: scale(1.05); /* Léger zoom */
+}
+
+.delete-button {
+    background-color: #000000; /* Noir */
+    color: #ffffff; /* Blanc */
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+    background-color: #333333; /* Gris foncé */
+    transform: scale(1.05); /* Zoom au survol */
+}
+
+/* Bouton de fermeture */
+.modal button:last-child {
+    background-color: #dddddd; /* Gris clair */
+    color: #555555; /* Texte gris foncé */
+}
+
+.modal button:last-child:hover {
+    background-color: #cccccc; /* Gris légèrement plus foncé */
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    .modal {
+        padding: 15px;
+        max-width: 100%;
+    }
+
+    .modal h2 {
+        font-size: 1.2rem;
+    }
+
+    .modal button {
+        font-size: 0.9rem;
+    }
+}

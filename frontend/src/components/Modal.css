@@ -1,0 +1,92 @@
+/* Overlay */
+.overlay {
+    background: rgba(0, 0, 0, 0.7); /* Fond semi-transparent */
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Assurez que c'est au-dessus des autres éléments */
+}
+
+/* Modal */
+.modal {
+    background: #ffffff; /* Blanc */
+    border-radius: 12px; /* Coins arrondis */
+    padding: 30px; /* Espacement généreux */
+    width: 90%; /* Largeur flexible */
+    max-width: 500px; /* Largeur maximale */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Ombre douce */
+    position: relative;
+    animation: fadeIn 0.3s ease; /* Animation d'apparition */
+}
+
+/* Animation d'apparition */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+/* Bouton supprimer */
+.delete-button {
+    background: #c20000; /* Rouge vif */
+    color: #ffffff; /* Blanc */
+    border: none;
+    border-radius: 8px;
+    padding: 10px 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    margin-top: 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.delete-button:hover {
+    background: #a00000; /* Rouge foncé */
+    transform: scale(1.05); /* Léger zoom au survol */
+}
+
+/* Checkbox container */
+.checkbox-container {
+    display: flex;
+    align-items: center; /* Aligner verticalement la checkbox et le label */
+    gap: 10px; /* Espacement entre la checkbox et le label */
+    margin-top: 15px;
+}
+
+/* Style de la checkbox */
+.checkbox-container input[type="checkbox"] {
+    width: 18px; /* Largeur de la checkbox */
+    height: 18px; /* Hauteur de la checkbox */
+    cursor: pointer;
+    accent-color: #c20000; /* Couleur rouge pour la coche */
+}
+
+/* Label associé */
+.checkbox-container label {
+    font-size: 1rem; /* Taille du texte */
+    color: #555; /* Texte gris */
+    cursor: pointer; /* Curseur pointeur */
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    .modal {
+        padding: 20px;
+        max-width: 90%;
+    }
+
+    .delete-button {
+        font-size: 0.9rem;
+        padding: 8px 12px;
+    }
+}

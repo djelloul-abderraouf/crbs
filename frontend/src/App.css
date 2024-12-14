@@ -1,0 +1,72 @@
+/* Styles généraux */
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7fa;
+  color: #333;
+  overflow-x: hidden; /* Évite les débordements */
+}
+
+.container {
+  max-width: 100%;
+  padding: 20px;
+  margin: 0 auto;
+}
+
+/* Classes communes */
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.button {
+  background-color: #004085;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #002d5c;
+}
+
+input, select, textarea {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+/* Responsivité globale */
+@media (max-width: 768px) {
+  .container {
+      padding: 10px;
+  }
+
+  h1, h2, h3 {
+      font-size: 1.2rem;
+      text-align: center;
+  }
+
+  button {
+      font-size: 0.9rem;
+      padding: 8px 12px;
+  }
+}
+:root {
+  --primary-color: #c20000; /* Rouge */
+  --secondary-color: #000000; /* Noir */
+  --background-color: #ffffff; /* Blanc */
+  --text-color: #333333; /* Couleur de texte */
+  --hover-color: #a00000; /* Rouge foncé pour hover */
+  --button-text-color: #ffffff; /* Blanc pour les boutons */
+}

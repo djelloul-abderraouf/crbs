@@ -1,0 +1,72 @@
+/* Conteneur principal */
+.form {
+    padding: 20px;
+    max-width: 600px;
+    margin: 20px auto;
+    background: #ffffff; /* Blanc */
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Titre du formulaire */
+.form h1 {
+    font-size: 1.8rem;
+    text-align: center;
+    color: #c20000; /* Rouge */
+    margin-bottom: 20px;
+}
+
+/* Champs d'entrée */
+.form input, .form select, .form textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #c20000; /* Rouge */
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-bottom: 15px;
+    background: #ffffff; /* Blanc */
+    color: #000000; /* Noir */
+    box-sizing: border-box;
+}
+
+/* Placeholder des champs */
+.form input::placeholder, .form textarea::placeholder {
+    color: #999999; /* Gris clair */
+}
+
+/* Bouton */
+.form button {
+    width: 100%;
+    background-color: #c20000; /* Rouge */
+    color: #ffffff; /* Blanc */
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* Effet au survol */
+.form button:hover {
+    background-color: #a00000; /* Rouge foncé */
+}
+
+/* Responsivité */
+@media (max-width: 768px) {
+    .form {
+        padding: 15px;
+    }
+
+    .form h1 {
+        font-size: 1.5rem;
+    }
+
+    .form input, .form select, .form textarea {
+        font-size: 0.9rem;
+    }
+
+    .form button {
+        font-size: 0.9rem;
+    }
+}
